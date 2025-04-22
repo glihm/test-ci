@@ -9,10 +9,11 @@ on:
       dojo_version:
         description: 'Dojo version'
         required: true
-  tags:
-    - 'v*'
-  branches:
-    - main
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - main
 
 jobs:
   prepare:
