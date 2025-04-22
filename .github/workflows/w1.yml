@@ -43,5 +43,5 @@ jobs:
       - name: s1
         id: s1
         run: |
-          echo ${{ needs.version_info.outputs.tag_name }}
-          echo ${{ needs.version_info.outputs.dojo_version }}
+          echo ${{ needs.prepare.outputs.tag_name }}
+          echo ${{ needs.prepare.outputs.dojo_version }}
