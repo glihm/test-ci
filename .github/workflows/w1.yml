@@ -36,12 +36,12 @@ jobs:
             echo "dojo_version=${{ inputs.dojo_version }}" >> $GITHUB_OUTPUT
           fi
 
-  use:
+  use_values:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
       - name: s1
         id: s1
         run: |
-          echo ${{ needs.prepare.outputs.tag_name }}
-          echo ${{ needs.prepare.outputs.dojo_version }}
+          echo "${{ needs.prepare.outputs.tag_name }}"
+          echo "${{ needs.prepare.outputs.dojo_version }}"
