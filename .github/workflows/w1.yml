@@ -25,8 +25,8 @@ jobs:
         run: |
          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
             # Extract tag name from ref
-            echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+            echo "tag_name=${GITHUB_REF#refs/tags/}" >> $V
           else
-            echo "tag_name=${{ inputs.tag_name }}" >> $GITHUB_OUTPUT
+            echo "tag_name=${{ inputs.tag_name }}" >> $V
           fi
-          echo ${{join(steps.version_info.outputs.*, '\n')}}
+          echo $V
