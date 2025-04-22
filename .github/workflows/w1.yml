@@ -53,8 +53,11 @@ jobs:
           fi
           cat /tmp/version_info
 
+  use:
+    needs: version_info
+    runs-on: ubuntu-latest
+    steps:
       - name: s1
-        needs: version_info
         id: s1
         run: |
           echo ${{ needs.version_info.outputs.tag_name }}
