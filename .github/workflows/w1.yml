@@ -12,21 +12,49 @@ on:
   push:
     tags:
       - 'v*'
-    branches:
-      - main
 
 jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Extract version info
+        if: github.event_name == 'workflow_dispatch'
         id: version_info
         run: |
          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
             # Extract tag name from ref
             echo "tag_name=${GITHUB_REF#refs/tags/}" >> /tmp/version_info
           else
+            # We're supposed to be in a workflow_dispatch here.
+            if [ -z "${{ inputs.tag_name }}" ]; then
+              echo "tag_name is empty"
+              exit 1
+            fi
             echo "tag_name=${{ inputs.tag_name }}" >> /tmp/version_info
           fi
           cat /tmp/version_info
+
+      - name: Extract version info
+        if: (!github.event_name == 'workflow_dispatch')
+        id: version_info
+        run: |
+         if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            # Extract tag name from ref
+            echo "tag_name=${GITHUB_REF#refs/tags/}" >> /tmp/version_info
+          else
+            # We're supposed to be in a workflow_dispatch here.
+            if [ -z "${{ inputs.tag_name }}" ]; then
+              echo "tag_name is empty"
+              exit 1
+            fi
+            echo "tag_name=${{ inputs.tag_name }}" >> /tmp/version_info
+          fi
+          cat /tmp/version_info
+
+      - name: s1
+        needs: version_info
+        id: s1
+        run: |
+          echo ${{ needs.version_info.outputs.tag_name }}
