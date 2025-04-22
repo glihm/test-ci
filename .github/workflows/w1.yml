@@ -1,4 +1,4 @@
-name: release
+name: w1
 
 on:
   workflow_dispatch:
@@ -20,13 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Get version
+      - name: Extract version info
         id: version_info
         run: |
-          # if it's a tag use it or use the input.
-          if [ -n "${{ github.ref_name }}" ]; then
-            echo "tag_name=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+         if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            # Extract tag name from ref
+            echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
           else
             echo "tag_name=${{ inputs.tag_name }}" >> $GITHUB_OUTPUT
           fi
-          echo $GITHUB_OUTPUT
+          echo ${{join(steps.version_info.outputs.*, '\n')}}
