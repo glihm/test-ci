@@ -38,7 +38,7 @@ jobs:
           cat /tmp/version_info >> $GITHUB_OUTPUT
 
   use:
-    needs: version_info
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - name: s1
