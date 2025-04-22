@@ -16,6 +16,9 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    outputs:
+      tag_name: ${{ steps.version_info.outputs.tag_name }}
+      dojo_version: ${{ steps.version_info.outputs.dojo_version }}
     steps:
       - uses: actions/checkout@v3
 
