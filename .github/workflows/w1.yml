@@ -35,10 +35,6 @@ jobs:
               echo "tag_name is empty"
               exit 1
             fi
-            if [[ ! "${{ inputs.tag_name }}" =~ ^v ]]; then
-              echo "tag_name must start with 'v'"
-              exit 1
-            fi
 
             TAG_NAME="${{ inputs.tag_name }}"
             if [[ ! "$TAG_NAME" =~ ^v ]]; then
