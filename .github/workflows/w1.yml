@@ -39,8 +39,19 @@ jobs:
               echo "tag_name must start with 'v'"
               exit 1
             fi
-            echo "tag_name=${{ inputs.tag_name }}" >> $GITHUB_OUTPUT
-            echo "dojo_version=${{ inputs.dojo_version }}" >> $GITHUB_OUTPUT
+
+            TAG_NAME="${{ inputs.tag_name }}"
+            if [[ ! "$TAG_NAME" =~ ^v ]]; then
+              TAG_NAME="v$TAG_NAME"
+            fi
+            echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+
+            DOJO_VERSION="${{ inputs.dojo_version }}"
+            if [[ ! "$DOJO_VERSION" =~ ^v ]]; then
+              DOJO_VERSION="v$DOJO_VERSION"
+            fi
+            echo "dojo_version=$DOJO_VERSION" >> $GITHUB_OUTPUT
+
           fi
 
   use_values:
